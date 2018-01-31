@@ -1,5 +1,5 @@
 read -p "Have you already copied/uploaded the certificate files to your home directory? " -n 1 -r
-echo 
+echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	echo ********** Installing HAnelly **********
