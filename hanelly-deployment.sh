@@ -22,29 +22,26 @@ sudo add-apt-repository \
 sudo apt-get install docker-ce -y
 sudo curl -o /usr/local/bin/docker-compose -OL https://github.com/docker/compose/releases/download/1.16.1/docker-compose-Linux-x86_64 && sudo chmod +x /usr/local/bin/docker-compose
 
-echo Enter password for sudo command
-sudo su
-mkdir /nakisa
-mkdir /nakisa/app
-mkdir /nakisa/app-hanelly
-mkdir /nakisa/app-hanelly/apache-conf 
-mkdir /nakisa/app-hanelly/apache-ssl 
-mkdir /nakisa/app-hanelly/hanelly-data
-mkdir /nakisa/app-hanelly/hanelly-data/data-batches/
+sudo mkdir /nakisa
+sudo mkdir /nakisa/app
+sudo mkdir /nakisa/app-hanelly
+sudo mkdir /nakisa/app-hanelly/apache-conf 
+sudo mkdir /nakisa/app-hanelly/apache-ssl 
+sudo mkdir /nakisa/app-hanelly/hanelly-data
+sudo mkdir /nakisa/app-hanelly/hanelly-data/data-batches/
 
-touch /nakisa/app-hanelly/hanelly-data/serial
-touch /nakisa/app-hanelly/hanelly-data/data-batches/batches.properties
+sudo touch /nakisa/app-hanelly/hanelly-data/serial
+sudo touch /nakisa/app-hanelly/hanelly-data/data-batches/batches.properties
 
-wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties
-wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config
-wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/apache-conf/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf
-wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/yml-templates/docker-compose-hanelly.yml.template >  /nakisa/app/docker-compose-hanelly.yml
-exit
+sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties"
+sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
+sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/apache-conf/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
+sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/yml-templates/docker-compose-hanelly.yml.template >  /nakisa/app/docker-compose-hanelly.yml"
 
 echo ********** Copying certificate files from home directory **********
-echo Enter password for sudo command
 sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
 
+echo ********** pulling the docker containers and starting the containers **********
 echo Enter docekrhub username and password
 echo Username: 
 read username
