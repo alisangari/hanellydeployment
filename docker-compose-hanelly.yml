@@ -1,0 +1,151 @@
+#2017-12-17-10:26
+version: '3.3'
+
+services:
+
+#  apache-shib:
+#    image: nakisa/apache:2.4-shib
+#    hostname: apache-shib
+#    depends_on:
+#      - hanelly
+#    restart: always
+#    volumes:
+#      - /nakisa/app-hanelly/apache-www:/var/www/html
+#      - /nakisa/app-hanelly/apache-ssl:/etc/apache2/ssl
+#      - /nakisa/app-hanelly/apache-conf:/etc/apache2/sites-enabled
+#      - /nakisa/app-hanelly/apache-logs:/var/log/apache2
+#      - /nakisa/app-hanelly/apache-shib:/usr/local/shibboleth
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    networks:
+#      nakisa:
+#        aliases:
+#          - apache-shib
+
+  elasticsearch1:
+    image: elasticsearch:5.6.4
+    hostname: es1
+    environment:
+        - ES_JAVA_OPTS:-Xms4g -Xmx4g
+        - bootstrap.memory_lock:true
+    command: elasticsearch -Enetwork.host=es1 -Etransport.host=es1 -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    volumes:
+        - /nakisa/app-hanelly/es-data:/usr/share/elasticsearch/data
+        - /nakisa/app-hanelly/es-logs:/usr/share/elasticsearch/logs
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - es1
+
+  hanelly:
+    image: nakisa/hanelly:3.2.0-snapshot
+    hostname: hanelly
+    ports:
+      - "8080:8080"
+    volumes:
+        - /nakisa/app-hanelly/idocs-data:/nakisa/idocs
+        - /nakisa/app-hanelly/tomcat-logs:/usr/local/tomcat/logs
+        - /nakisa/app-hanelly/hanelly-data/images/portraits:/usr/local/tomcat/webapps/hanelly/images/portraits
+        - /nakisa/app-hanelly/hanelly-data/auditlog:/usr/local/tomcat/webapps/hanelly/WEB-INF/auditlog
+        - /nakisa/app-hanelly/hanelly-data/log:/usr/local/tomcat/webapps/hanelly/WEB-INF/log
+        - /nakisa/app-hanelly/hanelly-data/build-archives:/usr/local/tomcat/webapps/hanelly/WEB-INF/build-archives
+        - /nakisa/app-hanelly/hanelly-data/queue:/usr/local/tomcat/webapps/hanelly/WEB-INF/queue
+        - /nakisa/app-hanelly/hanelly-data/effective:/usr/local/tomcat/webapps/hanelly/WEB-INF/effective
+        - /nakisa/app-hanelly/hanelly-data/data-batches:/usr/local/tomcat/webapps/hanelly/WEB-INF/data-batches
+        #Workaround untill dev find a fix
+        - /nakisa/app-hanelly/hanelly-data/conf.properties:/usr/local/tomcat/webapps/hanelly/conf.properties
+        - /nakisa/app-hanelly/hanelly-data/serial:/usr/local/tomcat/webapps/hanelly/WEB-INF/serial
+        - /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config:/usr/local/tomcat/webapps/hanelly/WEB-INF/nakisa.jaas.config
+
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+      - hanelly-queue
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - hanelly
+    environment:
+        # uncomment below if using HTTPS (uncommented Apache)
+        #CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.queue.url=http://hanelly-queue:10000/queue-manager -Dnak.idoc.app.url=http://idoclistener:10002/idoc-listener -Dnak.volume.path.idoc=/nakisa/idocs -Dfile.encoding='UTF-8' -Dsecurity.preventcsrf=false -Dnak.cookie.useHttpOnly=true -Dnak.cookie.useSecure=true -Ddynamic.sql.ddldialect=com.nakisa.data.dynamic.sqldialects.MySQLDialect -Xms3g -Xmx3g"
+        CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.queue.url=http://hanelly-queue:10000/queue-manager -Dnak.idoc.app.url=http://idoclistener:10002/idoc-listener -Dnak.volume.path.idoc=/nakisa/idocs -Dfile.encoding='UTF-8' -Dsecurity.preventcsrf=false -Dnak.cookie.useHttpOnly=false -Dnak.cookie.useSecure=false -Ddynamic.sql.ddldialect=com.nakisa.data.dynamic.sqldialects.MySQLDialect -Xms3g -Xmx3g"
+
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - /nakisa/app-hanelly/mysql-data:/var/lib/mysql
+        - /nakisa/app-hanelly/mysql-logs:/var/log/mysql
+        - /nakisa/app-hanelly/mysql-dump:/var/backups
+        - /nakisa/app-hanelly/mysql-conf/maxallow.cnf:/etc/mysql/mysql.conf.d/maxallow.cnf
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-db
+
+  idoclistener:
+    image: nakisa/tools:idoc-listener-1.2.0
+    hostname: idoclistener
+    volumes:
+        - /nakisa/app-hanelly/idocs-data:/data
+        - /nakisa/app-hanelly/idocs-logs:/idoc-listener/logs
+    depends_on:
+      - hanelly
+    ports:
+      - "10002:10002"
+    restart: always
+    environment:
+        nak.app.url: "http://hanelly:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+        #connectionString : "CLIENT=800 ASHOST=SAPA65.hq1.nakisa.net SYSNR=0 USER=ectdemo"
+        #sapPassword : "nakisademo"
+        #jco.server.gwhost : "SAPA65.hq1.nakisa.net"
+        #jco.server.gwserv : "sapgw00"
+        #jco.server.progid : "NAKIDOC"
+        #jco.server.unicode : "0"
+        #jco.server.connection_count : "2"
+        #nak.app.user.username : "sa"
+        #nak.app.user.password : "superadmin"
+        nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
+        #idoc.config.id : "defaultIdocMapping"
+        auto.start.receiver : "false"
+        nak.idoc.throttle.size: "0"
+    networks:
+      nakisa:
+        aliases:
+          - idl1
+
+  #Please do not forget to uncomment its depends_on line in the hanelly container when uncommenting the container.
+  hanelly-queue:
+    image: nakisa/tools:task-manager-1.5.0
+    hostname: hanelly-queue
+    ports:
+      - "10000:10000"
+    volumes:
+        - /nakisa/app-hanelly/queue-logs/logs:/nakisa-queue/logs
+    environment:
+        nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
+        nak.authentication.token: "NakisaInternal"
+        nak.default.username: "sa"
+        nak.default.role: "NAKISA_ADMIN_LEVEL_3"        
+    restart: always
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-queue
+
+networks:
+  nakisa:
+    driver: bridge
