@@ -37,10 +37,10 @@ then
 	sudo touch /nakisa/app-hanelly/hanelly-data/serial
 	sudo touch /nakisa/app-hanelly/hanelly-data/data-batches/batches.properties
 
-	sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties"
-	sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/tomcat_files/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
-	sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/apache-conf/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
-	sudo sh -c "wget -O - http://gitlab.hq1.nakisa.net/devops/dcompose-vagrant/raw/master/files/yml-templates/docker-compose-hanelly.yml.template >  /nakisa/app/docker-compose-hanelly.yml"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly.yml >  /nakisa/app/docker-compose-hanelly.yml"
 
 	echo ********** Copying certificate files from home directory **********
 	sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
