@@ -40,7 +40,7 @@ then
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
-	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly.yml >  /nakisa/app/docker-compose-hanelly.yml"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-2-2.yml >  /nakisa/app/docker-compose-hanelly-3-2-2.yml"
 
 	echo ********** Copying certificate files from home directory **********
 	sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
@@ -50,9 +50,9 @@ then
 	echo Username: 
 	read username
 	echo Password:
-	read password
+	read -s password
 
-	sudo docker login -u $username -p $password
+	sudo docker login -u $username --password-stdin $password
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml pull
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml up -d
 fi
