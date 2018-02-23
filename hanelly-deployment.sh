@@ -52,7 +52,7 @@ then
 	echo Password:
 	read -s password
 
-	sudo docker login -u $username --password-stdin $password
+	sudo docker login -u $username -p $password
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml pull
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml up -d
 fi
