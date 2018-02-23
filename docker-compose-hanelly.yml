@@ -75,6 +75,8 @@ services:
 
   hanelly-db:
     image: mysql:5.7
+    ports:
+        - "3306:3306"
     volumes:
         - /nakisa/app-hanelly/mysql-data:/var/lib/mysql
         - /nakisa/app-hanelly/mysql-logs:/var/log/mysql
@@ -91,6 +93,18 @@ services:
         aliases:
           - hanelly-db
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+       - hanelly-db:db
+    ports:
+       - 8000:80
+    depends_on:
+       - hanelly-db
+    environment:
+       PMA_HOST: aliubuntuvm1.hq1.nakisa.net
+       PMA_PORT: 3306
+       
   idoclistener:
     image: nakisa/tools:idoc-listener-1.2.0
     hostname: idoclistener
