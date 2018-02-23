@@ -3,25 +3,25 @@ version: '3.3'
 
 services:
 
-#  apache-shib:
-#    image: nakisa/apache:2.4-shib
-#    hostname: apache-shib
-#    depends_on:
-#      - hanelly
-#    restart: always
-#    volumes:
-#      - /nakisa/app-hanelly/apache-www:/var/www/html
-#      - /nakisa/app-hanelly/apache-ssl:/etc/apache2/ssl
-#      - /nakisa/app-hanelly/apache-conf:/etc/apache2/sites-enabled
-#      - /nakisa/app-hanelly/apache-logs:/var/log/apache2
-#      - /nakisa/app-hanelly/apache-shib:/usr/local/shibboleth
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    networks:
-#      nakisa:
-#        aliases:
-#          - apache-shib
+  apache-shib:
+    image: nakisa/apache:2.4-shib
+    hostname: apache-shib
+    depends_on:
+      - hanelly
+    restart: always
+    volumes:
+      - /nakisa/app-hanelly/apache-www:/var/www/html
+      - /nakisa/app-hanelly/apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-hanelly/apache-conf:/etc/apache2/sites-enabled
+      - /nakisa/app-hanelly/apache-logs:/var/log/apache2
+      - /nakisa/app-hanelly/apache-shib:/usr/local/shibboleth
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      nakisa:
+        aliases:
+          - apache-shib
 
   elasticsearch1:
     image: elasticsearch:5.6.4
@@ -40,7 +40,7 @@ services:
           - es1
 
   hanelly:
-    image: nakisa/hanelly:3.2.0-snapshot
+    image: nakisa/hanelly:3.2.2
     hostname: hanelly
     ports:
       - "8080:8080"
