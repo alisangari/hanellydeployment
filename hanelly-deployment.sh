@@ -53,6 +53,6 @@ then
 	read -s password
 
 	sudo docker login -u $username -p $password
-	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml pull
-	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml up -d
+	sudo docker-compose -f /nakisa/app/docker-compose-hanelly-3-2-2.yml pull
+	sudo docker-compose -f /nakisa/app/docker-compose-hanelly-3-2-2.yml up -d
 fi
