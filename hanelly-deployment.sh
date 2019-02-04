@@ -34,6 +34,12 @@ then
 	sudo mkdir /nakisa/app-hanelly/hanelly-data
 	sudo mkdir /nakisa/app-hanelly/hanelly-data/data-batches/
 
+	sudo mkdir /nakisa/app-hanelly/es-data
+	sudo mkdir /nakisa/app-hanelly/es-dump
+	sudo mkdir /nakisa/app-hanelly/es-logs
+	sudo chown -R 101:102 es-data es-dump es-logs
+	sudo chmod -R 777 es-data es-dump es-logs
+
 	sudo touch /nakisa/app-hanelly/hanelly-data/serial
 	sudo touch /nakisa/app-hanelly/hanelly-data/data-batches/batches.properties
 
