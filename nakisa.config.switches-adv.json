@@ -1,0 +1,280 @@
+{
+  "ssPackage::self" : [ {
+    "name" : "ssPackage",
+    "value" : "advanced",
+    "for" : "self"
+  } ],
+  "DynamicRootSwitch::self" : [ {
+    "name" : "DynamicRootSwitch",
+    "value" : "true",
+    "for" : "self"
+  } ],
+  "ocRoot::self" : [ {
+    "name" : "ocRoot",
+    "value" : "49090050",
+    "for" : "self"
+  } ],
+  "positionVacancySwitch::self" : [ {
+    "name" : "positionVacancySwitch",
+    "value" : "positionVacancyFlag",
+    "for" : "self"
+  } ],
+  "emailSMTPUser::self" : [ {
+    "name" : "emailSMTPUser",
+    "value" : "",
+    "for" : "self"
+  } ],
+  "emailSMTPPassword::self" : [ {
+    "name" : "emailSMTPPassword",
+    "value" : "the_emailSMTPPassword",
+    "for" : "self"
+  } ],
+  "appURL::self" : [ {
+    "name" : "appURL",
+    "value" : "the_appURL",
+    "for" : "self"
+  } ],
+  "emailSMTPHost::self" : [ {
+    "name" : "emailSMTPHost",
+    "value" : "the_emailSMTPHost",
+    "for" : "self"
+  } ],
+  "emailSMTPPort::self" : [ {
+    "name" : "emailSMTPPort",
+    "value" : "the_emailSMTPPort",
+    "for" : "self"
+  } ],
+  "emailSMTPSender::self" : [ {
+    "name" : "emailSMTPSender",
+    "value" : "the_emailSMTPSender",
+    "for" : "self"
+  } ],
+  "enabledPositionView::self" : [ {
+    "name" : "enabledPositionView",
+    "value" : "standard",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "department",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "detailed",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "condensed",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "talentRating",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "talentRatingVertical",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "location",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "employeeAnalytics",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "positionAnalytics",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "genderDistribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "positionSummary",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "spanLayer",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "budgetView",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "portraitView",
+    "for" : "self"
+  }, {
+    "name" : "enabledPositionView",
+    "value" : "FTEView",
+    "for" : "self"
+  } ],
+  "defaultPositionView::self" : [ {
+    "name" : "defaultPositionView",
+    "value" : "department",
+    "for" : "self"
+  } ],
+  "defaultEmployeeView::self" : [ {
+    "name" : "defaultEmployeeView",
+    "value" : "condensed",
+    "for" : "self"
+  } ],
+  "analyticReport::self" : [ {
+    "name" : "analyticReport",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "2ndDottedRelationSwitch::self" : [ {
+    "name" : "2ndDottedRelationSwitch",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "pdfPageSizes::self" : [ {
+    "name" : "pdfPageSizes",
+    "value" : "A2",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "A3",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "A4",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "A5",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "Letter",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "Tabloid",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "Legal",
+    "for" : "self"
+  }, {
+    "name" : "pdfPageSizes",
+    "value" : "Executive",
+    "for" : "self"
+  } ],
+  "successionPlan::self" : [ {
+    "name" : "successionPlan",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "sharedPosition::self" : [ {
+    "name" : "sharedPosition",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "positionWithBlankAbbr::self" : [ {
+    "name" : "positionWithBlankAbbr",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "positionWithoutJob::self" : [ {
+    "name" : "positionWithoutJob",
+    "value" : "false",
+    "for" : "self"
+  } ],
+  "enabledEmpDashboards::self" : [ {
+    "name" : "enabledEmpDashboards",
+    "value" : "age-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "gender-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "nationality-location",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "potential-performance",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "risk-of-loss-performance",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "risk-of-loss-potential",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "age-salary",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "disability",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "layer-pay-grade",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "risk-of-loss-potential-performance",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "gender-age",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "gender-pay-grade",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "nationality-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "ethnicity-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "pos-layer-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "pay-grade-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledEmpDashboards",
+    "value" : "country-distribution",
+    "for" : "self"
+  } ],
+  "enabledPosDashboards::self" : [ {
+    "name" : "enabledPosDashboards",
+    "value" : "pay-grade-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPosDashboards",
+    "value" : "country-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPosDashboards",
+    "value" : "pos-layer-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPosDashboards",
+    "value" : "city-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPosDashboards",
+    "value" : "department-distribution",
+    "for" : "self"
+  }, {
+    "name" : "enabledPosDashboards",
+    "value" : "costcenter-distribution",
+    "for" : "self"
+  } ]
+}
