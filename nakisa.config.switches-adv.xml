@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ASCII"?>
+<switches:SwitchDTOGroups xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:switches="http://nakisa.com/emf/config/switches">
+  <groups group="ssPackage::self">
+    <switcheDTOs name="ssPackage" for="self" value="advanced"/>
+  </groups>
+  <groups group="DynamicRootSwitch::self">
+    <switcheDTOs name="DynamicRootSwitch" for="self" value="true"/>
+  </groups>
+  <groups group="ocRoot::self">
+    <switcheDTOs name="ocRoot" for="self" value="49090050"/>
+  </groups>
+  <groups group="positionVacancySwitch::self">
+    <switcheDTOs name="positionVacancySwitch" for="self" value="positionVacancyFlag"/>
+  </groups>
+  <groups group="emailSMTPUser::self">
+    <switcheDTOs name="emailSMTPUser" for="self"/>
+  </groups>
+  <groups group="emailSMTPPassword::self">
+    <switcheDTOs name="emailSMTPPassword" for="self" value="Test2017"/>
+  </groups>
+  <groups group="appURL::self">
+    <switcheDTOs name="appURL" for="self" value="http://192.168.20.34:8080/hanelly/app"/>
+  </groups>
+  <groups group="emailSMTPHost::self">
+    <switcheDTOs name="emailSMTPHost" for="self" value="smtp.gmail.com"/>
+  </groups>
+  <groups group="emailSMTPPort::self">
+    <switcheDTOs name="emailSMTPPort" for="self" value="587"/>
+  </groups>
+  <groups group="emailSMTPSender::self">
+    <switcheDTOs name="emailSMTPSender" for="self" value="test2017rd@gmail.com"/>
+  </groups>
+  <groups group="enabledPositionView::self">
+    <switcheDTOs name="enabledPositionView" for="self" value="standard"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="department"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="detailed"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="condensed"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="talentRating"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="talentRatingVertical"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="location"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="employeeAnalytics"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="positionAnalytics"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="genderDistribution"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="positionSummary"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="spanLayer"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="budgetView"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="portraitView"/>
+    <switcheDTOs name="enabledPositionView" for="self" value="FTEView"/>
+  </groups>
+  <groups group="defaultPositionView::self">
+    <switcheDTOs name="defaultPositionView" for="self" value="department"/>
+  </groups>
+  <groups group="defaultEmployeeView::self">
+    <switcheDTOs name="defaultEmployeeView" for="self" value="condensed"/>
+  </groups>
+  <groups group="analyticReport::self">
+    <switcheDTOs name="analyticReport" for="self" value="false"/>
+  </groups>
+  <groups group="2ndDottedRelationSwitch::self">
+    <switcheDTOs name="2ndDottedRelationSwitch" for="self" value="false"/>
+  </groups>
+  <groups group="pdfPageSizes::self">
+    <switcheDTOs name="pdfPageSizes" for="self" value="A2"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="A3"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="A4"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="A5"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="Letter"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="Tabloid"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="Legal"/>
+    <switcheDTOs name="pdfPageSizes" for="self" value="Executive"/>
+  </groups>
+  <groups group="successionPlan::self">
+    <switcheDTOs name="successionPlan" for="self" value="false"/>
+  </groups>
+  <groups group="sharedPosition::self">
+    <switcheDTOs name="sharedPosition" for="self" value="false"/>
+  </groups>
+  <groups group="positionWithBlankAbbr::self">
+    <switcheDTOs name="positionWithBlankAbbr" for="self" value="false"/>
+  </groups>
+  <groups group="positionWithoutJob::self">
+    <switcheDTOs name="positionWithoutJob" for="self" value="false"/>
+  </groups>
+  <groups group="enabledEmpDashboards::self">
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="age-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="gender-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="nationality-location"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="potential-performance"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="risk-of-loss-performance"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="risk-of-loss-potential"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="age-salary"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="disability"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="layer-pay-grade"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="risk-of-loss-potential-performance"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="gender-age"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="gender-pay-grade"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="nationality-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="ethnicity-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="pos-layer-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="pay-grade-distribution"/>
+    <switcheDTOs name="enabledEmpDashboards" for="self" value="country-distribution"/>
+  </groups>
+  <groups group="enabledPosDashboards::self">
+    <switcheDTOs name="enabledPosDashboards" for="self" value="pay-grade-distribution"/>
+    <switcheDTOs name="enabledPosDashboards" for="self" value="country-distribution"/>
+    <switcheDTOs name="enabledPosDashboards" for="self" value="pos-layer-distribution"/>
+    <switcheDTOs name="enabledPosDashboards" for="self" value="city-distribution"/>
+    <switcheDTOs name="enabledPosDashboards" for="self" value="department-distribution"/>
+    <switcheDTOs name="enabledPosDashboards" for="self" value="costcenter-distribution"/>
+  </groups>
+</switches:SwitchDTOGroups>
