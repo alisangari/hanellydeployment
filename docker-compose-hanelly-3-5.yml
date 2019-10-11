@@ -87,6 +87,8 @@ services:
         - /nakisa/app-hanelly/apache-shib-logs/shibboleth-www:/usr/local/shib-logs/shibboleth-www
         # Mount docker socket
         - /var/run/docker.sock:/var/run/docker.sock
+        #for ChargeBee
+        - /nakisa/app-hanelly/hanelly-data/chargebee:/usr/local/tomcat/webapps/hanelly/chargebee
     depends_on:
       - elasticsearch1
       - hanelly-db
@@ -126,6 +128,7 @@ services:
           -Dnak.volume.path.excel-import=/nakisa/excel-import
           -Xss2048k -Xms5645m -Xmx5645m
           -Dauth.path.shibboleth=/usr/local/apache/shibboleth
+          -Dnak.neptune.app.url=https://neptune.nakisa.io/viewer.html
 
   hanelly-db:
     image: mysql:5.7
