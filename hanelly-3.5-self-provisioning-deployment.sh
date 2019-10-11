@@ -48,7 +48,7 @@ then
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app/docker-compose-hanelly-3-5.yml"
-	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app-hanelly/hanelly-data/upgradability/nakisa.config.switches-adv.json"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.config.switches-adv.json >  /nakisa/app-hanelly/hanelly-data/upgradability/nakisa.config.switches-adv.json"
 
 	echo ********** Copying certificate files from home directory **********
 	sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
