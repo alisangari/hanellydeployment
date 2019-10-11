@@ -1,0 +1,207 @@
+# Hanelly: master
+version: '3.3'
+
+services:
+
+  apache-shib:
+    image: nakisa/apache:2.4.25-shib
+    hostname: apache-shib
+    depends_on:
+      - hanelly
+    restart: always
+    volumes:
+      - /nakisa/app-hanelly/apache-www:/var/www/html
+      - /nakisa/app-hanelly/apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-hanelly/apache-conf:/etc/apache2/sites-enabled
+      - /nakisa/app-hanelly/apache-logs:/var/log/apache2
+      - /nakisa/app-hanelly/apache-shib:/usr/local/shibboleth
+      - /nakisa/app-hanelly/apache-shib-logs/shibboleth:/var/log/shibboleth
+      - /nakisa/app-hanelly/apache-shib-logs/shibboleth-www:/var/log/shibboleth-www
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      nakisa:
+        aliases:
+          - apache-shib
+
+  elasticsearch1:
+    image: elasticsearch:6.4.0
+    hostname: es1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300m"
+        max-file: "5"
+    environment:
+        - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+        - bootstrap.memory_lock:true
+    command: elasticsearch -Enetwork.host=es1 -Etransport.host=es1 -Ecluster.name=elasticsearch -Epath.repo=/tmp/elasticsearch/dump -Elogger.deprecation.level=warn
+    volumes:
+        - /nakisa/app-hanelly/es-data:/usr/share/elasticsearch/data
+        - /nakisa/app-hanelly/es-logs:/usr/share/elasticsearch/logs
+        - /nakisa/app-hanelly/es-dump:/tmp/elasticsearch/dump
+    ports:
+      - "127.0.0.1:9200:9200"
+
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - es1
+
+  hanelly:
+    image: nakisa/hanelly:3.5.0-SNAPSHOT
+    hostname: hanelly
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+        - /nakisa/app-hanelly/idocs-data:/nakisa/idocs
+        - /nakisa/app-hanelly/tomcat-logs:/usr/local/tomcat/logs
+        - /nakisa/app-hanelly/hanelly-data/images/portraits:/usr/local/tomcat/webapps/hanelly/images/portraits
+        - /nakisa/app-hanelly/hanelly-data/images/logo:/usr/local/tomcat/webapps/hanelly/images/logo
+        - /nakisa/app-hanelly/hanelly-data/auditlog:/usr/local/tomcat/webapps/hanelly/WEB-INF/auditlog
+        - /nakisa/app-hanelly/hanelly-data/log:/usr/local/tomcat/webapps/hanelly/WEB-INF/log
+        - /nakisa/app-hanelly/hanelly-data/build-archives:/usr/local/tomcat/webapps/hanelly/WEB-INF/build-archives
+        - /nakisa/app-hanelly/hanelly-data/queue:/usr/local/tomcat/webapps/hanelly/WEB-INF/queue
+        - /nakisa/app-hanelly/hanelly-data/effective:/usr/local/tomcat/webapps/hanelly/WEB-INF/effective
+        - /nakisa/app-hanelly/hanelly-data/data-batches:/usr/local/tomcat/webapps/hanelly/WEB-INF/data-batches
+        - /nakisa/app-hanelly/hanelly-data/sftp:/nakisa/excel-import
+        #Workaround untill dev find a fix
+        #- /nakisa/app-hanelly/hanelly-data/conf.properties:/usr/local/tomcat/webapps/hanelly/conf.properties
+        - /nakisa/app-hanelly/hanelly-data/serial:/usr/local/tomcat/webapps/hanelly/WEB-INF/serial
+        - /nakisa/app-hanelly/hanelly-data/jaas:/usr/local/tomcat/webapps/hanelly/WEB-INF/jaas
+        #Adding ExcelExports, Temp and Pdf folders to sync with Hanelly Docker
+        - /nakisa/app-hanelly/hanelly-data/ExcelExports:/usr/local/tomcat/webapps/hanelly/ExcelExports
+        - /nakisa/app-hanelly/hanelly-data/Temp:/usr/local/tomcat/webapps/hanelly/Temp
+        - /nakisa/app-hanelly/hanelly-data/builds/oc/pdf:/usr/local/tomcat/webapps/hanelly/WEB-INF/builds/oc/pdf
+        # 180417 RFM-2: Volumize dataBackup
+        - /nakisa/app-hanelly/hanelly-data/dataBackup:/usr/local/tomcat/webapps/hanelly/WEB-INF/dataBackup
+        # Upgradability report and upgrade configurations done from manager (config switches)
+        - /nakisa/app-hanelly/hanelly-data/upgradability:/usr/local/tomcat/webapps/hanelly/WEB-INF/upgradability
+        # Apache directories
+        - /nakisa/app-hanelly/apache-conf:/usr/local/apache/conf
+        - /nakisa/app-hanelly/apache-logs:/usr/local/apache/logs
+        - /nakisa/app-hanelly/apache-shib:/usr/local/apache/shibboleth
+        - /nakisa/app-hanelly/apache-shib-logs/shibboleth:/usr/local/shib-logs/shibboleth
+        - /nakisa/app-hanelly/apache-shib-logs/shibboleth-www:/usr/local/shib-logs/shibboleth-www  
+        # Mount docker socket
+        - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+      - hanelly-queue
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - hanelly
+    environment:
+        # uncomment below if using HTTPS (uncommented Apache)
+        CATALINA_OPTS: >
+          -Dnak.login.pwd.reset=signUp.html?j_token=e8cc823d068c41b1a2c7e44f4e2a910467bc147253b74ca5b5bafbbfa18d917e 
+          -Ddynamic.host_port=9300 
+          -Ddynamic.host=es1 
+          -Ddynamic.cluster=elasticsearch 
+          -Dcluster.standalone=true 
+          -Dcluster.discovery.file=WEB-INF/tcp.xml 
+          -Djgroups.bind_addr=hanelly 
+          -Djava.net.preferIPv4Stack=true 
+          -Dnak.authentication.token=NakisaInternal 
+          -Dnak.queue.url=http://hanelly-queue:10000/queue-manager 
+          -Dnak.idoc.app.url=http://idoclistener:10002/idoc-listener 
+          -Dnak.volume.path.idoc=/nakisa/idocs 
+          -Dfile.encoding='UTF-8' 
+          -Dsecurity.preventcsrf=true 
+          -Dnak.cookie.useHttpOnly=true 
+          -Dnak.cookie.useSecure=true 
+          -Ddynamic.sql.ddldialect=com.nakisa.data.dynamic.sqldialects.MySQLDialect 
+          -Dcom.nakisa.log.systemloggers=com.nakisa.web.framework.log.RequestLog=INFO=SysAppender,com.nakisa.web.framework.authentication.NakisaAuthentication=INFO=SysAppender/ConsoleAppender/FileAppender 
+          -XX:+UseConcMarkSweepGC 
+          -XX:+CMSParallelRemarkEnabled 
+          -XX:CMSInitiatingOccupancyFraction=70 
+          -XX:+UseCMSInitiatingOccupancyOnly 
+          -XX:+ScavengeBeforeFullGC 
+          -XX:+CMSScavengeBeforeRemark 
+          -Dnak.volume.path.excel-import=/nakisa/excel-import 
+          -Xss2048k -Xms3g -Xmx3g 
+          -Dauth.path.shibboleth=/usr/local/apache/shibboleth
+
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - /nakisa/app-hanelly/mysql-data:/var/lib/mysql
+        - /nakisa/app-hanelly/mysql-logs:/var/log/mysql
+        - /nakisa/app-hanelly/mysql-dump:/var/backups
+        - /nakisa/app-hanelly/mysql-conf/maxallow.cnf:/etc/mysql/mysql.conf.d/maxallow.cnf
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+    restart: always
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-db
+
+  idoclistener:
+    image: nakisa/tools:idoc-listener-1.5.2
+    hostname: idoclistener
+    volumes:
+        - /nakisa/app-hanelly/idocs-data:/data
+        - /nakisa/app-hanelly/idocs-logs:/idoc-listener/logs
+        # 180424 7392 SUP-2179: Persistent idoc connection settings (Also: The file should be created before compose up: /nakisa/app-hanelly/idocs-config/config.properties)
+        - /nakisa/app-hanelly/idocs-config/config.properties:/idoc-listener/config/config.properties
+    depends_on:
+      - hanelly
+    ports:
+      - "127.0.0.1:10002:10002"
+    restart: always
+    environment:
+        nak.app.url: "http://hanelly:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+        #connectionString : "CLIENT=800 ASHOST=SAPA65.hq1.nakisa.net SYSNR=0 USER=ectdemo"
+        #sapPassword : "nakisademo"
+        #jco.server.gwhost : "SAPA65.hq1.nakisa.net"
+        #jco.server.gwserv : "sapgw00"
+        #jco.server.progid : "NAKIDOC"
+        #jco.server.unicode : "0"
+        #jco.server.connection_count : "2"
+        #nak.app.user.username : "sa"
+        #nak.app.user.password : "superadmin"
+        nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
+        #idoc.config.id : "defaultIdocMapping"
+        auto.start.receiver : "true"
+        nak.idoc.throttle.size: "0"
+    networks:
+      nakisa:
+        aliases:
+          - idl1
+
+
+  hanelly-queue:
+    image: nakisa/tools:task-manager-1.7.0
+    hostname: hanelly-queue
+    ports:
+      - "127.0.0.1:10000:10000"
+    volumes:
+        - /nakisa/app-hanelly/queue-logs/logs:/nakisa-queue/logs
+    environment:
+        nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
+        nak.authentication.token: "NakisaInternal"
+        nak.default.username: "sa"
+        nak.default.role: "NAKISA_ADMIN_LEVEL_3"
+    restart: always
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-queue
+
+networks:
+  nakisa:
+    driver: bridge
