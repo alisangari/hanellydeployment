@@ -33,6 +33,7 @@ then
 	sudo mkdir /nakisa/app-hanelly/apache-ssl 
 	sudo mkdir /nakisa/app-hanelly/hanelly-data
 	sudo mkdir /nakisa/app-hanelly/hanelly-data/data-batches/
+	sudo mkdir /nakisa/app-hanelly/hanelly-data/upgradability/
 
 	sudo mkdir /nakisa/app-hanelly/es-data
 	sudo mkdir /nakisa/app-hanelly/es-dump
@@ -47,6 +48,7 @@ then
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app/docker-compose-hanelly-3-5.yml"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app-hanelly/hanelly-data/upgradability/nakisa.config.switches-adv.json"
 
 	echo ********** Copying certificate files from home directory **********
 	sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
@@ -61,4 +63,5 @@ then
 	sudo docker login -u $username -p $password
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly-3-5.yml pull
 #	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml up -d
+#       sudo https://<server>/hanelly/app/services/ConfigSwitchRestoreService/restoreConfigSwitchBackup?filename=nakisa.config.switches-adv.json&j_token=0021121f6d0a4bdbbf9c8488da731d38a4544b00a2074d8284755b24ed2074bd
 fi
