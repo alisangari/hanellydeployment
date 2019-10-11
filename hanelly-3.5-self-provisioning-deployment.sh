@@ -63,6 +63,6 @@ then
 
 	sudo docker login -u $username -p $password
 	sudo docker-compose -f /nakisa/app/docker-compose-hanelly-selfservice-3-5.yml pull
-#	sudo docker-compose -f /nakisa/app/docker-compose-hanelly.yml up -d
-#       sudo https://<server>/hanelly/app/services/ConfigSwitchRestoreService/restoreConfigSwitchBackup?filename=nakisa.config.switches-adv.json&j_token=0021121f6d0a4bdbbf9c8488da731d38a4544b00a2074d8284755b24ed2074bd
+#	sudo docker-compose -f /nakisa/app/docker-compose-hanelly-selfservice-3-5.yml up -d
+#       curl -L http://localhost:8080/hanelly/app/services/UpgradabilityService/restoreConfigSwitchBackup?filename=nakisa.config.switches-adv.json&j_token=0021121f6d0a4bdbbf9c8488da731d38a4544b00a2074d8284755b24ed2074bd
 fi
