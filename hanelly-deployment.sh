@@ -1,4 +1,4 @@
-read -p "Have you already copied/uploaded the certificate files to your home directory? " -n 1 -r
+read -p "Have you already copied/uploaded the certificate files, including the ones for nexus, to your home directory? " -n 1 -r
 echo 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -47,6 +47,11 @@ then
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app/docker-compose-hanelly-3-5.yml"
+
+	echo ********** Enabling access to internal images and feature branches ************
+	sudo mkdir /usr/share/ca-certificates/extra; 
+	sudo cp cert_root_devops_hq1.cer /usr/share/ca-certificates/extra/cert_root_devops_hq1.cer; sudo dpkg-reconfigure ca-certificates; sudo update-ca-certificates; sudo mkdir -p /etc/docker/certs.d/devops.hq1.nakisa.net; sudo cp NEW-devops.hq1.nakisa.net.crt /etc/docker/certs.d/devops.hq1.nakisa.net/ca.crt; sudo docker login -u docker -p docker devops.hq1.nakisa.net;
+
 
 	echo ********** Copying certificate files from home directory **********
 	sudo cp ~/cert.crt ~/cert.key /nakisa/app-hanelly/apache-ssl/
