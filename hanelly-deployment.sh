@@ -31,6 +31,7 @@ then
 	sudo mkdir /nakisa/app-hanelly
 	sudo mkdir /nakisa/app-hanelly/apache-conf 
 	sudo mkdir /nakisa/app-hanelly/apache-ssl 
+	sudo mkdir /nakisa/app-hanelly/mysql-conf
 	sudo mkdir /nakisa/app-hanelly/hanelly-data
 	sudo mkdir /nakisa/app-hanelly/hanelly-data/data-batches/
 
@@ -46,6 +47,7 @@ then
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/conf.properties > /nakisa/app-hanelly/hanelly-data/conf.properties"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/nakisa.jaas.config > /nakisa/app-hanelly/hanelly-data/nakisa.jaas.config"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/hanelly-ssl.conf > /nakisa/app-hanelly/apache-conf/hanelly-ssl.conf"
+	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/maxallow.cnf > /nakisa/app-hanelly/mysql-conf/maxallow.cnf"
 	sudo sh -c "wget -O - https://raw.githubusercontent.com/alisangari/hanellydeployment/master/docker-compose-hanelly-3-5.yml >  /nakisa/app/docker-compose-hanelly-3-5.yml"
 
 	echo ********** Enabling access to internal images and feature branches ************
